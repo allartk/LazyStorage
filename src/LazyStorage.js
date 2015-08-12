@@ -20,7 +20,14 @@ var LazyStorage = function(dbname,version,schemas) {
                s4() + '-' + s4() + s4() + s4();
     };
     var idb = window.indexedDB;
-    if(idb && 'deleteDatabase' in idb) {
+
+    //from pouchdb
+    var isSafari = typeof openDatabase !== 'undefined' &&
+        /(Safari|iPhone|iPad|iPod)/.test(navigator.userAgent) &&
+        !/Chrome/.test(navigator.userAgent) &&
+        !/BlackBerry/.test(navigator.platform);
+
+    if(idb && 'deleteDatabase' in idb && !isSafari) {
         return LazyStorage.iDB.call(this);
     }
     else if(window.openDatabase) {
