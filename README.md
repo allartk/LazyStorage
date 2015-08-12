@@ -1,7 +1,8 @@
 LazyStorage
 ===========================
 
-LazyStorage is an abstraction layer for indexeddb and webdb.
+LazyStorage is an abstraction layer for indexeddb and webdb. A working is
+example is in the example dir.
 
 
 ## Usage
@@ -16,7 +17,7 @@ var lz = new LazyStorage('Spreeuw',1,{
 );
 ```
 The constructor takes database name, version and a schema object as arguments. The schema object can be
-an array of table descriptions. Each description is an object with at least the property name
+an array(or object) of table descriptions. Each description is an object with at least the property name
 ```javascript
 [
   {
