@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Example offline layer</title>
+        <meta charset="UTF-8">
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="../src/LazyStorage.js"></script>
+        <script>
+          (function($) {
+          	$.fn.serializeObject = function() {
+          				$this = this;
+                  var json = {};
+                  $.map($this.serializeArray(), function(n, i){
+                      if(n['name'] != undefined && n['name'] != '')
+                          json[n['name']] = n['value'];
+                  });
+                  return json;
+          	}
+          })( jQuery );
+          var lz = new LazyStorage('Spreeuw',1,
+                  [
+                      {
+                          'name': 'Waarnemingen'
+                      }
+                  ]
+          );
+      </script>
+        <script>
+          $(function() {
+            var showItems = function() {
+              var list = '';
+              lz.getAll("Waarnemingen",function(records) {
+                console.log(records);
+                  for(i in records) {
+                    list += "<li>"+records[i]['species']+"  <a href='x' data-id=\""+records[i]['guid']+"\" class=\"rm\">X</a></li>";
+                  }
+                  $("#list").html(list);
+                  $(".rm").on("click",function(e) {
+                    e.preventDefault();
+                    lz.rm("Waarnemingen",{'guid':$(this).data('id')},function() {
+                      showItems();
+                    })
+                  })
+              });
+            }
+
+            $("#example_form").on("submit",function(e) {
+              e.preventDefault();
+              var item = $(this).serializeObject();
+              lz.save('Waarnemingen',item,showItems);
+            })
+            showItems();
+          })
+        </script>
+
+      </head>
+      <body>
+        <form id="example_form">
+          <label>Species</label>
+          <input name="species" type="text">
+          <input type="submit">
+        </form>
+        <div>
+          <h2>Sightings</h2>
+          <ul id="list">
+          </ul>
+        </div>
+      </body>
+  </html>
