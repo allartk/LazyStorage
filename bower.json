@@ -1,0 +1,17 @@
+{
+  "name": "LazyStorage",
+  "version": "0.0.0",
+  "homepage": "https://github.com/allartk/LazyStorage",
+  "authors": [
+    "allartk <allartk@gmail.com>"
+  ],
+  "main": "src/LazyStorage.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
